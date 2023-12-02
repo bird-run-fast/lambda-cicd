@@ -34,10 +34,11 @@ runs:
 
     # lambrollは、公式で配布されているアクションを使用しています
     # https://github.com/fujiwara/lambroll#github-actions
-    - name: deploy
+    - name: s3 push
       shell: bash
       working-directory: ${{ inputs.working-directory }}
       run: |
         zip -r test.zip .
         date=`date "+%Y%m%d-%H%M%S"`
-        aws s3 cp "./test.zip" "s3://lambda-cicd/${date}"
+        aws s3 cp "./test.zip" "s3://lambda-cicd/${date}.zip"
+        aws lambda update-function-code --function-name testlamda --s3-bucket lambda-cicd --s3-key ${date}.zip
