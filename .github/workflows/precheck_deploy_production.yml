@@ -5,8 +5,8 @@ on:
   push:
     # branches:
     #   - main
-    paths:
-      - 'function/precheck/**'
+    # paths:
+    #   - 'function/precheck/**'
 
 # デプロイが連続で起動しないように同時デプロイを禁止しています
 # https://docs.github.com/ja/actions/using-jobs/using-concurrency
@@ -27,7 +27,7 @@ jobs:
       # https://docs.github.com/ja/actions/creating-actions/creating-a-composite-action
       # GoやRubyは、言語ごとにビルドや前処理が異なるため、Composite Actionを分けて作成しています
       - name: deploy
-        uses: ./.github/actions/deploy.yml
+        uses: ./.github/actions/deploy
         with:
           working-directory: function/precheck
           app-name: precheck

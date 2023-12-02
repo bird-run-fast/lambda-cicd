@@ -33,7 +33,8 @@ runs:
       uses: aws-actions/configure-aws-credentials@v2
       with:
         aws-region: ap-northeast-1
-        role-to-assume: arn:aws:iam::${{ inputs.aws-account-id }}:role/${{ inputs.app-name }}-${{ inputs.stage }}-deploy
+        # role-to-assume: arn:aws:iam::${{ inputs.aws-account-id }}:role/${{ inputs.app-name }}-${{ inputs.stage }}-deploy
+        role-to-assume: arn:aws:iam::308565263693:role/precheck-production-deploy
         role-session-name: github-actions-${{ github.run_id }}
 
     # # lambrollは、公式で配布されているアクションを使用しています
