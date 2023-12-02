@@ -37,13 +37,13 @@ runs:
         role-to-assume: arn:aws:iam::308565263693:role/oidc-example-role
         # role-session-name: github-actions-${{ github.run_id }}
 
-    # # lambrollは、公式で配布されているアクションを使用しています
-    # # https://github.com/fujiwara/lambroll#github-actions
-    # - uses: fujiwara/lambroll@v0
-    #   with:
-    #     version: ${{ env.LAMBROLL_VERSION }}
-
-    # - name: deploy
-    #   shell: bash
-    #   working-directory: ${{ inputs.working-directory }}
-    #   run: デプロイ処理は省略
+    # lambrollは、公式で配布されているアクションを使用しています
+    # https://github.com/fujiwara/lambroll#github-actions
+    - uses: fujiwara/lambroll@v0
+      with:
+        version: ${{ env.LAMBROLL_VERSION }}
+    - name: deploy
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: |
+        lambroll deploy
