@@ -1,0 +1,35 @@
+# .github/workflows/lambda_1_deploy_production.yml
+name: deploy production
+
+on:
+  push:
+    # branches:
+    #   - main
+    paths:
+      - 'function/precheck/**'
+
+# デプロイが連続で起動しないように同時デプロイを禁止しています
+# https://docs.github.com/ja/actions/using-jobs/using-concurrency
+concurrency:
+  group: precheck-deploy-production
+
+jobs:
+  deploy_production:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment:
+      name: production
+
+    steps:
+      - uses: actions/checkout@v3
+
+      # Lambdaのデプロイは、処理内容が共通だったため、Composite Actionに切り出しています
+      # https://docs.github.com/ja/actions/creating-actions/creating-a-composite-action
+      # GoやRubyは、言語ごとにビルドや前処理が異なるため、Composite Actionを分けて作成しています
+      - name: deploy
+        uses: ./.github/actions/deploy.yml
+        with:
+          working-directory: function/precheck
+          app-name: precheck
+          stage: production
+          aws-account-id: 308565263693

@@ -1,1 +1,1 @@
-# lambda-cicd
+# lambda_sample
